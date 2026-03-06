@@ -21,15 +21,17 @@ app = FastAPI(
     version="1.0.0"
 )
 
-# Add CORS middleware to allow frontend requests
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["http://localhost:5173"],  # Vite dev server
+    allow_origins=[
+        "http://localhost:5173",
+        "https://rayeva-ai-frontend.vercel.app",  # Your Vercel URL
+        "https://*.vercel.app",  # All Vercel preview URLs
+    ],
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
 )
-
 
 # --- Request body schema ---
 class ProductInput(BaseModel):
