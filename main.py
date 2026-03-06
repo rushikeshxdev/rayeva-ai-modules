@@ -25,7 +25,7 @@ app.add_middleware(
     CORSMiddleware,
     allow_origins=[
         "http://localhost:5173",
-        "https://rayeva-ai-frontend.vercel.app",  # Your Vercel URL
+        "https://rayeva-ai-modules.vercel.app/",  # Your Vercel URL
         "https://*.vercel.app",  # All Vercel preview URLs
     ],
     allow_credentials=True,
