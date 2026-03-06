@@ -410,6 +410,9 @@ export default function ImpactReport() {
                   color: 'var(--text-dark)',
                   lineHeight: 1.7,
                   fontStyle: 'italic',
+                  whiteSpace: 'normal',
+                  wordWrap: 'break-word',
+                  overflowWrap: 'break-word',
                 }}>
                   "{impactData.impact_statement}"
                 </p>

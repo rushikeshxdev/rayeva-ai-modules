@@ -379,13 +379,13 @@ export default function ProposalGenerator() {
                       color: 'var(--text-dark)',
                       fontWeight: 500,
                       fontFamily: 'var(--font-body)',
-                    }}>{product.name}</div>
+                    }}>{product.product_name}</div>
                     <div style={{
                       fontSize: '0.8rem',
                       color: 'var(--text-muted)',
                       marginTop: '4px',
                     }}>
-                      {product.description}
+                      {product.sustainability_benefit}
                     </div>
                   </div>
                   <div style={{ textAlign: 'center' }}>
