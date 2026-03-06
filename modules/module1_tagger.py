@@ -71,7 +71,7 @@ def tag_product(product_name: str, product_description: str) -> dict:
     prompt = build_prompt(product_name, product_description)
     
     # Call unified AI client (tries Gemini, falls back to Groq)
-    ai_response = generate_content(prompt, temperature=0.3, max_tokens=1000, response_format="json")
+    ai_response = generate_content(prompt, temperature=0.3, max_tokens=2048, response_format="json")
     
     if not ai_response["success"]:
         return {

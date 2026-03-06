@@ -95,7 +95,7 @@ def generate_impact_report(order_id: int, products: list[dict]) -> dict:
         prompt = build_impact_prompt(plastic_saved_grams, carbon_avoided_kg, local_sourcing_percent)
         
         # Call unified AI client (tries Gemini, falls back to Groq)
-        ai_response = generate_content(prompt, temperature=0.7, max_tokens=500, response_format="text")
+        ai_response = generate_content(prompt, temperature=0.7, max_tokens=2048, response_format="text")
         
         if ai_response["success"]:
             impact_statement = ai_response["text"].strip()

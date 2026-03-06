@@ -92,7 +92,7 @@ Question: "{message_text}"
 
 Focus on sustainability, eco-friendly products, and conscious consumerism."""
     
-    ai_response = generate_content(prompt, temperature=0.3, max_tokens=300, response_format="text")
+    ai_response = generate_content(prompt, temperature=0.3, max_tokens=2048, response_format="text")
     
     if ai_response["success"]:
         return ai_response["text"].strip()
