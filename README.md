@@ -306,19 +306,6 @@ rayeva-ai/
 ├── requirements.txt
 └── .env.example
 ```
-
----
-
-## ✅ Assignment Evaluation Criteria
-
-| Criteria | Weight | Implementation |
-|----------|--------|---------------|
-| Structured AI Outputs | 20% | All modules return validated JSON with consistent snake_case keys |
-| Business Logic Grounding | 20% | Real DB queries for orders, Python math for impact (not AI guessing) |
-| Clean Architecture | 20% | AI logic isolated in `modules/`, business logic in `main.py` routes |
-| Practical Usefulness | 20% | Real B2B flows, live WhatsApp Twilio integration, seeded test data |
-| Creativity & Reasoning | 20% | Two-step impact calculation, escalation system, fallback handling |
-
 ---
 
 ## 🌱 Seed Data (for testing WhatsApp bot)
@@ -335,6 +322,6 @@ rayeva-ai/
 
 <div align="center">
 
-Built for **Rayeva World Pvt Ltd** · Full Stack / AI Internship Assignment · Deadline March 12, 2026
+Built by Rushikesh Randive to automate sustainable commerce with AI 🌱 · Full Stack / AI Intern · Rayeva World Pvt Ltd · 2026
 
 </div>
