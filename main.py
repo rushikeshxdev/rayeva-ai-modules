@@ -25,13 +25,13 @@ app.add_middleware(
     CORSMiddleware,
     allow_origins=[
         "http://localhost:5173",
-        "https://rayeva-ai-modules.vercel.app",  # Your Vercel URL
-        "https://*.vercel.app",  # All Vercel preview URLs
+        "https://rayeva-ai-modules.vercel.app",
     ],
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
 )
+
 
 # --- Request body schema ---
 class ProductInput(BaseModel):
