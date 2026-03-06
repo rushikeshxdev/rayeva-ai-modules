@@ -9,7 +9,7 @@ import WhatsAppBot from './pages/WhatsAppBot';
 function App() {
   return (
     <BrowserRouter>
-      <div className="min-h-screen bg-gray-50">
+      <div style={{ minHeight: '100vh', background: 'var(--bg-page)' }}>
         <Navbar />
         <Routes>
           <Route path="/" element={<Home />} />

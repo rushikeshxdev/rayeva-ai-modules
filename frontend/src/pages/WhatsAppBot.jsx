@@ -1,152 +1,231 @@
 import { useState, useEffect } from 'react';
 import apiClient from '../api/client';
 
-function WhatsAppBot() {
+const cardStyle = {
+  background: 'var(--bg-white)',
+  border: '1px solid var(--teal-border)',
+  borderRadius: '20px',
+  padding: '32px',
+  boxShadow: 'var(--shadow-sm)',
+};
+
+export default function WhatsAppBot() {
   const [logs, setLogs] = useState([]);
   const [escalations, setEscalations] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
-
-  const fetchData = async () => {
-    setLoading(true);
-    setError(null);
-
-    try {
-      const [logsRes, escalationsRes] = await Promise.all([
-        apiClient.get('/api/whatsapp/logs'),
-        apiClient.get('/api/escalations')
-      ]);
-
-      setLogs(logsRes.data.logs || []);
-      setEscalations(escalationsRes.data.escalations || []);
-    } catch (err) {
-      setError(err.response?.data?.detail || 'Failed to fetch data');
-    } finally {
-      setLoading(false);
-    }
-  };
 
   useEffect(() => {
     fetchData();
   }, []);
 
+  const fetchData = async () => {
+    setLoading(true);
+    try {
+      const [logsRes, escalationsRes] = await Promise.all([
+        apiClient.get('/api/whatsapp/logs'),
+        apiClient.get('/api/escalations')
+      ]);
+      setLogs(logsRes.data.logs || []);
+      setEscalations(escalationsRes.data.escalations || []);
+    } catch (err) {
+      console.error('Error fetching data:', err);
+    } finally {
+      setLoading(false);
+    }
+  };
+
   return (
-    <div className="container mx-auto p-6">
-      <div className="flex justify-between items-center mb-6">
-        <h1 className="text-3xl font-bold text-green-700">WhatsApp Bot Dashboard</h1>
-        <button
-          onClick={fetchData}
-          className="bg-green-600 text-white px-4 py-2 rounded-lg hover:bg-green-700 transition"
-        >
-          Refresh
-        </button>
+    <div style={{ maxWidth: '1200px', margin: '0 auto', padding: '40px 2rem' }}>
+      <div style={{ marginBottom: '32px' }}>
+        <div style={{
+          display: 'inline-block',
+          padding: '4px 12px',
+          background: 'rgba(0, 196, 167, 0.1)',
+          border: '1px solid rgba(0, 196, 167, 0.3)',
+          borderRadius: '100px',
+          fontSize: '0.75rem',
+          color: 'var(--teal-primary)',
+          marginBottom: '12px',
+          letterSpacing: '0.05em',
+          fontWeight: 600,
+        }}>
+          MODULE 04
+        </div>
+        <h1 style={{
+          fontFamily: 'var(--font-heading)',
+          fontSize: '2.5rem',
+          color: 'var(--text-dark)',
+          fontWeight: 700,
+          marginBottom: '8px',
+        }}>
+          WhatsApp Bot
+        </h1>
+        <p style={{
+          color: 'var(--text-muted)',
+          fontSize: '1rem',
+          fontFamily: 'var(--font-body)',
+        }}>
+          AI-powered customer support with automatic intent detection
+        </p>
       </div>
 
-      {loading && (
-        <div className="text-center py-8 text-gray-600">Loading...</div>
-      )}
-
-      {error && (
-        <div className="p-4 bg-red-100 text-red-700 rounded-lg mb-6">
-          {error}
+      {/* Setup Instructions */}
+      <div style={{
+        ...cardStyle,
+        background: 'rgba(0, 196, 167, 0.05)',
+        border: '2px solid rgba(0, 196, 167, 0.2)',
+        marginBottom: '24px',
+      }}>
+        <div style={{ fontSize: '0.75rem', color: 'var(--teal-primary)', letterSpacing: '0.1em', marginBottom: '12px', fontWeight: 600, textTransform: 'uppercase' }}>
+          SETUP REQUIRED
         </div>
-      )}
+        <p style={{ color: 'var(--text-dark)', marginBottom: '12px', lineHeight: 1.6, fontFamily: 'var(--font-body)' }}>
+          To activate the WhatsApp bot, you need to configure Twilio credentials:
+        </p>
+        <ol style={{ color: 'var(--text-muted)', paddingLeft: '20px', lineHeight: 1.8, fontSize: '0.9rem', fontFamily: 'var(--font-body)' }}>
+          <li>Sign up for Twilio at <a href="https://www.twilio.com/try-twilio" target="_blank" rel="noopener noreferrer" style={{ color: 'var(--teal-primary)' }}>twilio.com</a></li>
+          <li>Get your Account SID and Auth Token</li>
+          <li>Set up WhatsApp Sandbox</li>
+          <li>Configure webhook URL: <code style={{ background: 'var(--bg-page)', padding: '2px 6px', borderRadius: '4px', color: 'var(--teal-primary)', fontFamily: 'var(--font-mono)' }}>https://rayeva-ai-modules.onrender.com/api/whatsapp/webhook</code></li>
+          <li>Add credentials to Render environment variables</li>
+        </ol>
+      </div>
 
-      {!loading && !error && (
-        <>
-          <div className="mb-8">
-            <h2 className="text-2xl font-semibold text-gray-700 mb-4">Recent Conversations</h2>
-            <div className="bg-white rounded-lg shadow-md overflow-hidden">
-              <div className="overflow-x-auto">
-                <table className="w-full">
-                  <thead className="bg-green-600 text-white">
-                    <tr>
-                      <th className="px-4 py-3 text-left">Phone</th>
-                      <th className="px-4 py-3 text-left">Message</th>
-                      <th className="px-4 py-3 text-left">Intent</th>
-                      <th className="px-4 py-3 text-left">Response</th>
-                      <th className="px-4 py-3 text-left">Time</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {logs.length === 0 ? (
-                      <tr>
-                        <td colSpan="5" className="px-4 py-8 text-center text-gray-500">
-                          No conversations yet
-                        </td>
-                      </tr>
-                    ) : (
-                      logs.map((log) => (
-                        <tr key={log.id} className="border-b hover:bg-gray-50">
-                          <td className="px-4 py-3 text-sm">{log.customer_phone}</td>
-                          <td className="px-4 py-3 text-sm">{log.message_received?.substring(0, 50)}...</td>
-                          <td className="px-4 py-3">
-                            <span className="px-2 py-1 bg-green-100 text-green-800 rounded text-xs">
-                              {log.intent_detected}
-                            </span>
-                          </td>
-                          <td className="px-4 py-3 text-sm">{log.response_sent?.substring(0, 50)}...</td>
-                          <td className="px-4 py-3 text-sm text-gray-500">
-                            {new Date(log.created_at).toLocaleString()}
-                          </td>
-                        </tr>
-                      ))
-                    )}
-                  </tbody>
-                </table>
-              </div>
-            </div>
+      {/* Recent Conversations */}
+      <div style={cardStyle}>
+        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '20px' }}>
+          <div style={{ fontSize: '0.75rem', color: 'var(--text-muted)', letterSpacing: '0.1em', fontWeight: 600, textTransform: 'uppercase' }}>
+            RECENT CONVERSATIONS
           </div>
+          <button
+            onClick={fetchData}
+            style={{
+              background: 'rgba(0, 196, 167, 0.1)',
+              border: '1px solid rgba(0, 196, 167, 0.3)',
+              color: 'var(--teal-primary)',
+              padding: '8px 16px',
+              borderRadius: '10px',
+              cursor: 'pointer',
+              fontSize: '0.875rem',
+              fontWeight: 600,
+              transition: 'all 0.2s ease',
+            }}
+          >
+            ↻ Refresh
+          </button>
+        </div>
 
-          <div>
-            <h2 className="text-2xl font-semibold text-gray-700 mb-4">Customer Escalations</h2>
-            <div className="bg-white rounded-lg shadow-md overflow-hidden">
-              <div className="overflow-x-auto">
-                <table className="w-full">
-                  <thead className="bg-red-600 text-white">
-                    <tr>
-                      <th className="px-4 py-3 text-left">Phone</th>
-                      <th className="px-4 py-3 text-left">Issue</th>
-                      <th className="px-4 py-3 text-left">Status</th>
-                      <th className="px-4 py-3 text-left">Time</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {escalations.length === 0 ? (
-                      <tr>
-                        <td colSpan="4" className="px-4 py-8 text-center text-gray-500">
-                          No escalations
-                        </td>
-                      </tr>
-                    ) : (
-                      escalations.map((esc) => (
-                        <tr key={esc.id} className="border-b hover:bg-gray-50">
-                          <td className="px-4 py-3 text-sm">{esc.customer_phone}</td>
-                          <td className="px-4 py-3 text-sm">{esc.issue_description?.substring(0, 100)}...</td>
-                          <td className="px-4 py-3">
-                            <span className={`px-2 py-1 rounded text-xs ${
-                              esc.status === 'pending' ? 'bg-yellow-100 text-yellow-800' :
-                              esc.status === 'resolved' ? 'bg-green-100 text-green-800' :
-                              'bg-gray-100 text-gray-800'
-                            }`}>
-                              {esc.status}
-                            </span>
-                          </td>
-                          <td className="px-4 py-3 text-sm text-gray-500">
-                            {new Date(esc.created_at).toLocaleString()}
-                          </td>
-                        </tr>
-                      ))
-                    )}
-                  </tbody>
-                </table>
-              </div>
-            </div>
+        {loading ? (
+          <div style={{ textAlign: 'center', padding: '40px', color: 'var(--text-muted)', fontFamily: 'var(--font-body)' }}>
+            Loading...
           </div>
-        </>
-      )}
+        ) : logs.length === 0 ? (
+          <div style={{ textAlign: 'center', padding: '40px', color: 'var(--text-muted)', fontFamily: 'var(--font-body)' }}>
+            <div style={{ fontSize: '3rem', marginBottom: '12px' }}>💬</div>
+            <div>No conversations yet. Set up Twilio to start receiving messages.</div>
+          </div>
+        ) : (
+          <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
+            {logs.map((log) => (
+              <div key={log.id} style={{
+                background: 'var(--bg-page)',
+                border: '1px solid var(--teal-border)',
+                borderRadius: '12px',
+                padding: '16px',
+                transition: 'all 0.2s ease',
+              }}
+              onMouseEnter={e => {
+                e.currentTarget.style.borderColor = 'var(--teal-primary)';
+                e.currentTarget.style.boxShadow = '0 2px 8px rgba(0, 196, 167, 0.1)';
+              }}
+              onMouseLeave={e => {
+                e.currentTarget.style.borderColor = 'var(--teal-border)';
+                e.currentTarget.style.boxShadow = 'none';
+              }}>
+                <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '12px' }}>
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                    <div style={{ color: 'var(--teal-primary)', fontSize: '0.85rem', fontWeight: 600 }}>
+                      {log.customer_phone}
+                    </div>
+                    {log.intent_detected && (
+                      <span style={{
+                        background: 'rgba(0, 196, 167, 0.1)',
+                        border: '1px solid rgba(0, 196, 167, 0.3)',
+                        color: 'var(--teal-primary)',
+                        padding: '4px 12px',
+                        borderRadius: '100px',
+                        fontSize: '0.75rem',
+                        fontWeight: 600,
+                      }}>
+                        {log.intent_detected}
+                      </span>
+                    )}
+                  </div>
+                  <div style={{ fontSize: '0.75rem', color: 'var(--text-muted)' }}>
+                    {new Date(log.created_at).toLocaleString()}
+                  </div>
+                </div>
+                <div style={{ marginBottom: '8px' }}>
+                  <div style={{ fontSize: '0.75rem', color: 'var(--text-muted)', marginBottom: '4px' }}>Customer:</div>
+                  <div style={{ color: 'var(--text-dark)', fontSize: '0.9rem', fontFamily: 'var(--font-body)' }}>{log.message_received}</div>
+                </div>
+                <div>
+                  <div style={{ fontSize: '0.75rem', color: 'var(--text-muted)', marginBottom: '4px' }}>Bot:</div>
+                  <div style={{ color: 'var(--teal-primary)', fontSize: '0.9rem', fontFamily: 'var(--font-body)' }}>{log.response_sent}</div>
+                </div>
+              </div>
+            ))}
+          </div>
+        )}
+      </div>
+
+      {/* Escalations */}
+      <div style={{ ...cardStyle, marginTop: '24px' }}>
+        <div style={{ fontSize: '0.75rem', color: 'var(--accent-gold)', letterSpacing: '0.1em', marginBottom: '20px', fontWeight: 600, textTransform: 'uppercase' }}>
+          CUSTOMER ESCALATIONS
+        </div>
+
+        {escalations.length === 0 ? (
+          <div style={{ textAlign: 'center', padding: '40px', color: 'var(--text-muted)', fontFamily: 'var(--font-body)' }}>
+            <div style={{ fontSize: '3rem', marginBottom: '12px' }}>✅</div>
+            <div>No escalations. All queries handled successfully!</div>
+          </div>
+        ) : (
+          <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
+            {escalations.map((esc) => (
+              <div key={esc.id} style={{
+                background: 'rgba(245, 166, 35, 0.05)',
+                border: '1px solid rgba(245, 166, 35, 0.2)',
+                borderRadius: '12px',
+                padding: '16px',
+              }}>
+                <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '12px' }}>
+                  <div style={{ color: 'var(--accent-gold)', fontSize: '0.85rem', fontWeight: 600 }}>
+                    {esc.customer_phone}
+                  </div>
+                  <div style={{ display: 'flex', gap: '8px', alignItems: 'center' }}>
+                    <span style={{
+                      background: esc.status === 'resolved' ? 'rgba(0, 196, 167, 0.1)' : 'rgba(245, 166, 35, 0.1)',
+                      border: `1px solid ${esc.status === 'resolved' ? 'rgba(0, 196, 167, 0.3)' : 'rgba(245, 166, 35, 0.3)'}`,
+                      color: esc.status === 'resolved' ? 'var(--teal-primary)' : 'var(--accent-gold)',
+                      padding: '4px 12px',
+                      borderRadius: '100px',
+                      fontSize: '0.75rem',
+                      fontWeight: 600,
+                    }}>
+                      {esc.status}
+                    </span>
+                    <div style={{ fontSize: '0.75rem', color: 'var(--text-muted)' }}>
+                      {new Date(esc.created_at).toLocaleString()}
+                    </div>
+                  </div>
+                </div>
+                <div style={{ color: 'var(--text-dark)', fontSize: '0.9rem', fontFamily: 'var(--font-body)' }}>{esc.issue_description}</div>
+              </div>
+            ))}
+          </div>
+        )}
+      </div>
     </div>
   );
 }
-
-export default WhatsAppBot;

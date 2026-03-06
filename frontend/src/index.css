@@ -1,3 +1,85 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+/* Rayeva AI Dashboard - Light Teal Theme */
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+:root {
+  /* Colors */
+  --bg-page: #f0fbfa;
+  --bg-white: #ffffff;
+  --bg-card: #ffffff;
+  --teal-primary: #00c4a7;
+  --teal-dark: #009688;
+  --teal-light: #e0f7f4;
+  --teal-border: #b2ece5;
+  --text-dark: #0d2d2a;
+  --text-mid: #3d6e69;
+  --text-muted: #7aa8a3;
+  --accent-gold: #f5a623;
+  --error: #f44336;
+  --success: #00c4a7;
+  
+  /* Typography */
+  --font-heading: 'Sora', sans-serif;
+  --font-body: 'Inter', sans-serif;
+  --font-mono: 'Fira Code', monospace;
+  
+  /* Spacing */
+  --radius-sm: 8px;
+  --radius-md: 16px;
+  --radius-lg: 24px;
+  --radius-full: 100px;
+  
+  /* Shadows */
+  --shadow-sm: 0 2px 8px rgba(0, 196, 167, 0.08);
+  --shadow-md: 0 4px 12px rgba(0, 196, 167, 0.12);
+  --shadow-lg: 0 8px 24px rgba(0, 196, 167, 0.15);
+}
+
+body {
+  background: var(--bg-page);
+  color: var(--text-dark);
+  font-family: var(--font-body);
+  min-height: 100vh;
+  line-height: 1.6;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-heading);
+  color: var(--text-dark);
+  line-height: 1.2;
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--bg-page);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--teal-primary);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--teal-dark);
+}
+
+/* Selection */
+::selection {
+  background: var(--teal-light);
+  color: var(--text-dark);
+}
+
+/* Focus visible */
+*:focus-visible {
+  outline: 2px solid var(--teal-primary);
+  outline-offset: 2px;
+}
