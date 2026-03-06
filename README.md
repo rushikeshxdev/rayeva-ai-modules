@@ -118,6 +118,7 @@ Intelligent customer support via WhatsApp with automatic intent detection and ro
 
 ### **AI & Integration**
 ![Google Gemini](https://img.shields.io/badge/Google_Gemini-00c4a7?style=flat-square&logo=google&logoColor=white)
+![Groq](https://img.shields.io/badge/Groq-00c4a7?style=flat-square&color=00c4a7&logoColor=white)
 ![Twilio](https://img.shields.io/badge/Twilio_WhatsApp-00c4a7?style=flat-square&logo=twilio&logoColor=white)
 
 ---
@@ -536,13 +537,11 @@ The system comes pre-seeded with 5 sample orders for testing the WhatsApp bot:
 | `ORD-004` | Vikram Patel | Compostable Plates × 10 | ✅ Delivered | "Where is ORD-004?" |
 | `ORD-005` | Sneha Joshi | Beeswax Food Wraps × 5 | 📦 Shipped | "Check ORD-005 status" |
 
-### **Screenshots**
-
-> 📸 *Dashboard screenshots coming soon! The interface features a modern teal theme with intuitive navigation and real-time AI responses.*
-
 ### **Live Demo**
 
-Want to see it in action? Follow the [Quick Start](#-quick-start) guide to run it locally in under 5 minutes!
+🚀 **[https://rayeva-ai-modules.vercel.app/](https://rayeva-ai-modules.vercel.app/)**
+
+> Backend runs locally — clone the repo and run `uvicorn main:app --reload` to connect the AI modules.
 
 ---
 
@@ -578,10 +577,10 @@ Rayeva World Pvt Ltd • 2026
 
 ### 🌱 Built with passion for sustainable commerce
 
-**[⬆ Back to Top](#-rayeva-ai-dashboard)**
-
 ---
 
 *Automating sustainability, one AI module at a time* 🚀
+
+Built by **Rushikesh Randive** · Rayeva World Pvt Ltd Internship · 2026
 
 </div>
